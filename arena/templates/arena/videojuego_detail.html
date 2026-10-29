@@ -1,0 +1,18 @@
+{% extends "arena/base_seccion.html" %}
+{% block titulo %}{{ object.nombre }}{% endblock %}
+{% block h1 %}{{ object.nombre }}{% endblock %}
+{% block volver_url %}{% url 'arena:videojuego_list' %}{% endblock %}
+{% block seccion %}
+  <p><strong>Desarrolladora:</strong> {{ object.desarrolladora }}</p>
+  <p><strong>Género:</strong> {{ object.genero }}</p>
+  <p><strong>Año de lanzamiento:</strong> {{ object.anio_lanzamiento }}</p>
+  <p>{{ object.descripcion }}</p>
+  <h2>Torneos</h2>
+  <ul>
+    {% for t in object.torneos.all %}
+      <li><a href="{% url 'arena:torneo_detail' t.pk %}">{{ t.nombre }}</a> ({{ t.fecha_inicio|date:"d/m/Y" }})</li>
+    {% empty %}
+      <li>Sin torneos.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

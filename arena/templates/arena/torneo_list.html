@@ -1,0 +1,13 @@
+{% extends "arena/base_seccion.html" %}
+{% block titulo %}Torneos{% endblock %}
+{% block h1 %}Torneos{% endblock %}
+{% block seccion %}
+  <ul>
+    {% for t in object_list %}
+      <li><a href="{% url 'arena:torneo_detail' t.pk %}">{{ t.nombre }}</a>
+        ({{ t.videojuego.nombre }}, {{ t.fecha_inicio|date:"d/m/Y" }})</li>
+    {% empty %}
+      <li>No hay torneos.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

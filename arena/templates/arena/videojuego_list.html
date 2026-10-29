@@ -1,0 +1,12 @@
+{% extends "arena/base_seccion.html" %}
+{% block titulo %}Videojuegos{% endblock %}
+{% block h1 %}Videojuegos{% endblock %}
+{% block seccion %}
+  <ul>
+    {% for v in object_list %}
+      <li><a href="{% url 'arena:videojuego_detail' v.pk %}">{{ v.nombre }}</a> ({{ v.genero }})</li>
+    {% empty %}
+      <li>No hay videojuegos.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

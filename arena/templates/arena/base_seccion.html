@@ -1,0 +1,9 @@
+{% extends "arena/base.html" %}
+{% block title %}{% block titulo %}{% endblock %} | Gaming Esports Arena{% endblock %}
+{% block content %}
+  <h1>{% block h1 %}{% endblock %}</h1>
+  <section>
+    {% block seccion %}{% endblock %}
+  </section>
+  <p><a href="{% block volver_url %}{% url 'arena:portada' %}{% endblock %}">&larr; Volver</a></p>
+{% endblock %}

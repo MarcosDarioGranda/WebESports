@@ -1,0 +1,15 @@
+{% extends "arena/base.html" %}
+{% block content %}
+  <h1>Bienvenido a Gaming Esports Arena</h1>
+  <h2>Torneos destacados</h2>
+  <ul class="tarjetas">
+    {% for t in destacados %}
+      <li>
+        <h3><a href="{% url 'arena:torneo_detail' t.pk %}">{{ t.nombre }}</a></h3>
+        <p>{{ t.videojuego.nombre }} &middot; {{ t.fecha_inicio|date:"d/m/Y" }} &middot; {{ t.sede }}</p>
+      </li>
+    {% empty %}
+      <li>No hay torneos todavía.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

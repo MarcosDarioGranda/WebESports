@@ -1,0 +1,12 @@
+{% extends "arena/base_seccion.html" %}
+{% block titulo %}Equipos{% endblock %}
+{% block h1 %}Equipos{% endblock %}
+{% block seccion %}
+  <ul>
+    {% for e in object_list %}
+      <li><a href="{% url 'arena:equipo_detail' e.pk %}">{{ e.nombre }}</a> ({{ e.pais }})</li>
+    {% empty %}
+      <li>No hay equipos.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% load static %}<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Gaming Esports Arena{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'arena/css/estilo.css' %}">
+</head>
+<body>
+  <header>
+    <p class="logo"><a href="{% url 'arena:portada' %}">Gaming Esports Arena</a></p>
+    <nav>
+      <ul>
+        <li><a href="{% url 'arena:portada' %}">Portada</a></li>
+        <li><a href="{% url 'arena:torneo_list' %}">Torneos</a></li>
+        <li><a href="{% url 'arena:videojuego_list' %}">Videojuegos</a></li>
+        <li><a href="{% url 'arena:equipo_list' %}">Equipos</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+  <footer>
+    <p>Gaming Esports Arena &ndash; Ingeniería Web</p>
+  </footer>
+</body>
+</html>
