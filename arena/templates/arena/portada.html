@@ -6,7 +6,7 @@
     {% for t in destacados %}
       <li>
         <h3><a href="{% url 'arena:torneo_detail' t.pk %}">{{ t.nombre }}</a></h3>
-        <p>{{ t.videojuego.nombre }} &middot; {{ t.fecha_inicio|date:"d/m/Y" }} &middot; {{ t.sede }}</p>
+        <p><a href="{% url 'arena:videojuego_detail' t.videojuego.pk %}">{{ t.videojuego.nombre }}</a> &middot; {{ t.fecha_inicio|date:"d/m/Y" }} &middot; {{ t.sede }}</p>
       </li>
     {% empty %}
       <li>No hay torneos todavía.</li>

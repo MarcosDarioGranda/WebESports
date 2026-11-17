@@ -5,7 +5,7 @@
   <ul>
     {% for t in object_list %}
       <li><a href="{% url 'arena:torneo_detail' t.pk %}">{{ t.nombre }}</a>
-        ({{ t.videojuego.nombre }}, {{ t.fecha_inicio|date:"d/m/Y" }})</li>
+        (<a href="{% url 'arena:videojuego_detail' t.videojuego.pk %}">{{ t.videojuego.nombre }}</a>, {{ t.fecha_inicio|date:"d/m/Y" }})</li>
     {% empty %}
       <li>No hay torneos.</li>
     {% endfor %}

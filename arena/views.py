@@ -11,9 +11,10 @@ class PortadaView(TemplateView):
         hoy = timezone.localdate()
         destacados = []
         for juego in Videojuego.objects.all():
-            torneo = (Torneo.objects.filter(videojuego=juego, fecha_fin__gte=hoy)
+            torneos = juego.torneos.all() #type:ignore
+            torneo = (torneos.filter(fecha_fin__gte=hoy)
                       .order_by('fecha_inicio').first()
-                      or Torneo.objects.filter(videojuego=juego).order_by('-fecha_inicio').first())
+                      or torneos.order_by('-fecha_inicio').first())
             if torneo:
                 destacados.append(torneo)
         ctx['destacados'] = destacados
