@@ -1,4 +1,8 @@
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from django.urls import reverse
 from django.utils import timezone
+from django.views import View
 from django.views.generic import ListView, DetailView, TemplateView
 from .models import Videojuego, Equipo, Torneo
 
@@ -44,3 +48,14 @@ class EquipoListView(ListView):
 
 class EquipoDetailView(DetailView):
     model = Equipo
+
+class TorneoEquiposView(View):
+    
+    def get(self, request, pk):
+        torneo = get_object_or_404(Torneo, pk=pk)
+        equipos = [
+            {'nombre': e.nombre,
+             'url': reverse('arena:equipo_detail', args=[e.pk])}
+            for e in torneo.equipos.all()
+        ]
+        return JsonResponse({'torneo': torneo.nombre, 'equipos': equipos})

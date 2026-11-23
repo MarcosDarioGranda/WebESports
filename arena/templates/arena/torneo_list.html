@@ -2,10 +2,14 @@
 {% block titulo %}Torneos{% endblock %}
 {% block h1 %}Torneos{% endblock %}
 {% block seccion %}
-  <ul>
+  {% include "arena/_buscador.html" %}
+  <ul id="lista">
     {% for t in object_list %}
       <li><a href="{% url 'arena:torneo_detail' t.pk %}">{{ t.nombre }}</a>
-        (<a href="{% url 'arena:videojuego_detail' t.videojuego.pk %}">{{ t.videojuego.nombre }}</a>, {{ t.fecha_inicio|date:"d/m/Y" }})</li>
+        (<a href="{% url 'arena:videojuego_detail' t.videojuego.pk %}">{{ t.videojuego.nombre }}</a>, {{ t.fecha_inicio|date:"d/m/Y" }})
+        <button type="button" class="ver-equipos" data-url="{% url 'arena:torneo_equipos' t.pk %}">Ver equipos</button>
+        <ul class="equipos-ajax"></ul>
+      </li>
     {% empty %}
       <li>No hay torneos.</li>
     {% endfor %}

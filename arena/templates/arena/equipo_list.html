@@ -2,7 +2,8 @@
 {% block titulo %}Equipos{% endblock %}
 {% block h1 %}Equipos{% endblock %}
 {% block seccion %}
-  <ul>
+  {% include "arena/_buscador.html" %}
+  <ul id="lista">
     {% for e in object_list %}
       <li><a href="{% url 'arena:equipo_detail' e.pk %}">{{ e.nombre }}</a> ({{ e.pais }})</li>
     {% empty %}

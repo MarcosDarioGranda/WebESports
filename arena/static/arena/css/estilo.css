@@ -65,3 +65,35 @@ footer {
   background-color: #1a1f3a;
   font-size: 0.9rem;
 }
+
+.buscador {
+  margin: 0 0 1rem 0;
+}
+
+.buscador input {
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #00e5a8;
+  border-radius: 4px;
+  background-color: #1a1f3a;
+  color: #e8e8f0;
+}
+
+#contador {
+  margin-left: 0.8rem;
+  font-size: 0.9rem;
+}
+
+.ver-equipos {
+  margin-left: 0.5rem;
+  padding: 0.15rem 0.6rem;
+  border: 1px solid #00e5a8;
+  border-radius: 4px;
+  background-color: #1a1f3a;
+  color: #00e5a8;
+  cursor: pointer;
+}
+
+.equipos-ajax {
+  display: none;
+  margin: 0.5rem 0 0.5rem 1rem;
+}

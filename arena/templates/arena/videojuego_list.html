@@ -2,7 +2,8 @@
 {% block titulo %}Videojuegos{% endblock %}
 {% block h1 %}Videojuegos{% endblock %}
 {% block seccion %}
-  <ul>
+  {% include "arena/_buscador.html" %}
+  <ul id="lista">
     {% for v in object_list %}
       <li><a href="{% url 'arena:videojuego_detail' v.pk %}">{{ v.nombre }}</a> ({{ v.genero }})</li>
     {% empty %}
