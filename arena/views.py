@@ -14,13 +14,16 @@ class PortadaView(TemplateView):
         ctx = super().get_context_data(**kwargs)
         hoy = timezone.localdate()
         destacados = []
-        for juego in Videojuego.objects.all():
-            torneos = juego.torneos.all() #type:ignore
-            torneo = (torneos.filter(fecha_fin__gte=hoy)
-                      .order_by('fecha_inicio').first()
-                      or torneos.order_by('-fecha_inicio').first())
-            if torneo:
-                destacados.append(torneo)
+        # prefetch_related: 2 consultas en total en vez de 1 por videojuego
+        for juego in Videojuego.objects.prefetch_related('torneos'):
+            torneos = list(juego.torneos.all())  # type:ignore
+            proximos = [t for t in torneos if t.fecha_fin >= hoy]
+            if proximos:
+                # el más próximo en el tiempo
+                destacados.append(min(proximos, key=lambda t: t.fecha_inicio))
+            elif torneos:
+                # si no hay futuros, el más reciente
+                destacados.append(max(torneos, key=lambda t: t.fecha_inicio))
         ctx['destacados'] = destacados
         return ctx
 
@@ -32,6 +35,7 @@ class TorneoListView(ListView):
 
 class TorneoDetailView(DetailView):
     model = Torneo
+    queryset = Torneo.objects.select_related('videojuego').prefetch_related('equipos')
 
 
 class VideojuegoListView(ListView):
@@ -40,6 +44,7 @@ class VideojuegoListView(ListView):
 
 class VideojuegoDetailView(DetailView):
     model = Videojuego
+    queryset = Videojuego.objects.prefetch_related('torneos')
 
 
 class EquipoListView(ListView):
@@ -48,9 +53,12 @@ class EquipoListView(ListView):
 
 class EquipoDetailView(DetailView):
     model = Equipo
+    queryset = Equipo.objects.prefetch_related('torneos__videojuego')
+
 
 class TorneoEquiposView(View):
-    
+    """Devuelve en JSON los equipos de un torneo (para la petición AJAX)."""
+
     def get(self, request, pk):
         torneo = get_object_or_404(Torneo, pk=pk)
         equipos = [
