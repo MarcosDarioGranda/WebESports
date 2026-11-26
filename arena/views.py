@@ -1,9 +1,10 @@
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
 from django.views import View
 from django.views.generic import ListView, DetailView, TemplateView
+from .forms import ResenaForm
 from .models import Videojuego, Equipo, Torneo
 
 
@@ -35,7 +36,7 @@ class TorneoListView(ListView):
 
 class TorneoDetailView(DetailView):
     model = Torneo
-    queryset = Torneo.objects.select_related('videojuego').prefetch_related('equipos')
+    queryset = (Torneo.objects.select_related('videojuego').prefetch_related('equipos', 'resenas'))
 
 
 class VideojuegoListView(ListView):
@@ -67,3 +68,17 @@ class TorneoEquiposView(View):
             for e in torneo.equipos.all()
         ]
         return JsonResponse({'torneo': torneo.nombre, 'equipos': equipos})
+
+def crear_resena(request):
+    if request.method == 'POST':
+        # 1. Se reciben los datos
+        form = ResenaForm(request.POST)
+        # 2. Se validan
+        if form.is_valid():
+            # 3. Se guardan y se redirige al torneo
+            resena = form.save()
+            return redirect('arena:torneo_detail', pk=resena.torneo.pk)
+    else:
+        # GET: formulario vacío
+        form = ResenaForm(initial={'torneo': request.GET.get('torneo')})
+    return render(request, 'arena/resena.html', {'form': form})

@@ -36,14 +36,12 @@ $(function () {
     var $boton = $(this);
     var $panel = $boton.siblings('.equipos-ajax');
 
-    //Si ya está abierto, se cierra
     if ($panel.is(':visible')) {
       $panel.slideUp();
       $boton.text('Ver equipos');
       return;
     }
 
-    //Si ya se cargó antes, solo se vuelve a abrir
     if ($panel.children().length > 0) {
       $panel.slideDown();
       $boton.text('Ocultar equipos');

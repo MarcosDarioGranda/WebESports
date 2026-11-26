@@ -12,4 +12,5 @@ urlpatterns = [
     path('videojuegos/<int:pk>/', views.VideojuegoDetailView.as_view(), name='videojuego_detail'),
     path('equipos/', views.EquipoListView.as_view(), name='equipo_list'),
     path('equipos/<int:pk>/', views.EquipoDetailView.as_view(), name='equipo_detail'),
+    path('resenas/nueva/', views.crear_resena, name='resena_create'),
 ]

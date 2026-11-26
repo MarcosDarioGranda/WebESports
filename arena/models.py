@@ -26,6 +26,7 @@ class Equipo(models.Model):
 
     def __str__(self):
         return self.nombre
+    
 
 
 class Torneo(models.Model):
@@ -44,3 +45,21 @@ class Torneo(models.Model):
 
     def __str__(self):
         return self.nombre
+
+class Resena(models.Model):
+    # Relación 1:N: un torneo tiene muchas reseñas
+    torneo = models.ForeignKey(
+        Torneo, on_delete=models.CASCADE, related_name='resenas')
+    autor = models.CharField(max_length=100)
+    puntuacion = models.PositiveSmallIntegerField(
+        choices=[(i, str(i)) for i in range(1, 6)])
+    comentario = models.TextField()
+    fecha = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-fecha']
+        verbose_name = 'reseña'
+        verbose_name_plural = 'reseñas'
+
+    def __str__(self):
+        return f'{self.autor} - {self.torneo} ({self.puntuacion}/5)'

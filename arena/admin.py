@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Videojuego, Equipo, Torneo
+from .models import Resena, Videojuego, Equipo, Torneo
 
 
 @admin.register(Videojuego)
@@ -19,3 +19,8 @@ class TorneoAdmin(admin.ModelAdmin):
     list_display = ('nombre', 'videojuego', 'fecha_inicio', 'fecha_fin', 'sede')
     list_filter = ('videojuego',)
     filter_horizontal = ('equipos',)
+
+@admin.register(Resena)
+class ResenaAdmin(admin.ModelAdmin):
+    list_display = ('autor', 'torneo', 'puntuacion', 'fecha')
+    list_filter = ('puntuacion',)

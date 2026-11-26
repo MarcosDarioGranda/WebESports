@@ -17,4 +17,13 @@
       <li>Sin equipos.</li>
     {% endfor %}
   </ul>
+  <h2>Reseñas</h2>
+  <p><a href="{% url 'arena:resena_create' %}?torneo={{ object.pk }}">Escribir una reseña</a></p>
+  <ul>
+    {% for r in object.resenas.all %}
+      <li><strong>{{ r.autor }}</strong> &ndash; {{ r.puntuacion }}/5 ({{ r.fecha|date:"d/m/Y" }})<br>{{ r.comentario }}</li>
+    {% empty %}
+      <li>Todavía no hay reseñas.</li>
+    {% endfor %}
+  </ul>
 {% endblock %}
